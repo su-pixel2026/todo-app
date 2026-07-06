@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './App.css'
+import styles from './components/App.module.css'
 import TodoItem from './components/TodoItem'
 import TodoInput from './components/TodoInput'
 import TodoStats from './components/TodoStats'
@@ -38,10 +38,10 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className={styles.app}>
       <h1>Todo</h1>
       <TodoInput text={text} setText={setText} onAdd={addTodo} />
-      <ul className="todo-list">
+      <ul className={styles.list}>
         {todos.map(todo => (
           <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onDelete={deleteTodo} />
         ))}
