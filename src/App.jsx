@@ -1,56 +1,19 @@
-import { useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import About from './pages/About'
 import styles from './components/App.module.css'
-import TodoItem from './components/TodoItem'
-import TodoInput from './components/TodoInput'
-import TodoStats from './components/TodoStats'
-
 
 function App() {
-
-  const [text, setText] = useState('')
-
-  const [todos, setTodos] = useState(() => {
-    const saved = localStorage.getItem('todos')
-    return saved ? JSON.parse(saved) : []
-  })
-
-
-  const addTodo = () => {
-    if (text.trim() === '') return
-    const newTodo = { id: Date.now(), text, done: false }
-    setTodos([...todos, newTodo])
-    setText('')
-  }
-
-  const toggleTodo = (id) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, done: !todo.done } : todo
-    ))
-  }
-
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos))
-  }, [todos])
-
-
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id))
-  }
-
   return (
     <div className={styles.app}>
-      <h1>Todo</h1>
-      <TodoInput text={text} setText={setText} onAdd={addTodo} />
-      <ul className={styles.list}>
-        {todos.map(todo => (
-          <TodoItem key={todo.id} todo={todo} onToggle={toggleTodo} onDelete={deleteTodo} />
-        ))}
-      </ul>
-      <TodoStats todos={todos} />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </div>
   )
-
-
 }
 
 export default App
